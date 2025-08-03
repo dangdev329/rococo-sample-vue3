@@ -145,7 +145,7 @@ export const useAuthStore = defineStore('auth', {
      */
     async requestPasswordReset(email) {
       try {
-        const response = await axios.post('/auth/request_password_reset', { email })
+        const response = await axios.post('/auth/forgot_password', { email })
 
         if (response.data?.success) {
           Notify.create({
@@ -161,6 +161,32 @@ export const useAuthStore = defineStore('auth', {
         }
       } catch (error) {
         return this.handleApiError(error, 'Failed to send reset email')
+      }
+    },
+
+    /**
+     * Update user profile data
+     */
+    async updateProfile(profileData) {
+      try {
+        const response = await axios.put('/person/me', profileData)
+
+        if (response.data?.success) {
+          this.updateUser(response.data?.person)
+
+          Notify.create({
+            message: 'Profile updated successfully',
+            color: 'positive',
+            position: 'top',
+            timeout: 3000,
+          })
+          return { success: true, data: response.data.person }
+        } else {
+          this.showErrorNotification(response.data?.message)
+          return { success: false, message: response.data?.message }
+        }
+      } catch (error) {
+        return this.handleApiError(error, 'Failed to update profile')
       }
     },
 

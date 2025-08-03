@@ -8,6 +8,29 @@ const routes = [
         component: () => import('pages/IndexPage.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: 'profile',
+        component: () => import('pages/ProfilePage.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'todos/all',
+        component: () => import('pages/TodosPage.vue'),
+        meta: { requiresAuth: true },
+        name: 'all',
+      },
+      {
+        path: 'todos/active',
+        component: () => import('pages/TodosPage.vue'),
+        meta: { requiresAuth: true },
+        name: 'active',
+      },
+      {
+        path: 'todos/completed',
+        component: () => import('pages/TodosPage.vue'),
+        meta: { requiresAuth: true },
+        name: 'completed',
+      },
     ],
   },
 
